@@ -17,3 +17,16 @@ login_ina_btn = driver.find_element(By.LINK_TEXT, 'Login dengan INA')
 login_ina_btn.click()
 time.sleep(2)
 
+with open('Login-Six/pass.txt', 'r') as x:
+    password = x.read()
+with open('Login-Six/nim.txt', 'r') as x:
+    nim = x.read()
+
+uname = driver.find_element(By.NAME, 'username')
+uname.send_keys(nim)
+pwd = driver.find_element(By.NAME, 'password')
+pwd.send_keys(password)
+# time.sleep(2)
+submit = driver.find_element(By.NAME, 'submit')
+submit.click()
+time.sleep(100)
