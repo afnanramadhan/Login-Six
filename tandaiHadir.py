@@ -29,4 +29,17 @@ pwd.send_keys(password)
 # time.sleep(2)
 submit = driver.find_element(By.NAME, 'submit')
 submit.click()
+# time.sleep(2)
+
+kelas = driver.find_element(By.LINK_TEXT, 'Kelas')
+kelas.click()
+
+matdis1 = driver.find_element(By.XPATH, "/html/body/div/div[2]/div/table/tbody/tr[1]/td[1]/div[2]/div[1]/a")
+matdis1.click()
+
+tandaiHadir = driver.find_element(By.LINK_TEXT, 'Tandai Hadir')
+tandaiHadir.click()
+
 time.sleep(100)
+
+
