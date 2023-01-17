@@ -4,28 +4,23 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
+import time
 from loginsix import login
 
 f = open('tandaiHadir.txt', 'r')
 tglMK = f.readlines()
 tglMK = list(map(lambda x:x.strip(),tglMK))
+tanggal = str(time.localtime()[2])
 
 
 driver = webdriver.Chrome()
+action = ActionChains(driver)
 login(driver)
 
 #open menu class
 kelas = driver.find_element(By.LINK_TEXT, 'Kelas')
 kelas.click()
 
-sem = driver.find_element(By.PARTIAL_LINK_TEXT, 'Semester 2')
-sem.click()
-
-sem1 = driver.find_element(By.LINK_TEXT, 'Semester 1 - 2022/2023')
-sem1.click()
-
-des = driver.find_element(By.LINK_TEXT, 'Nov 2022')
-des.click()
 
 # select calender
 kalender = driver.find_element(By.XPATH, "/html/body/div/div[2]/div/table/tbody")
@@ -40,22 +35,75 @@ for i in row:
     for j in col:
         #cari tanggal dari tiap kolom per baris
         tgll = j.find_element(By.TAG_NAME, 'div')
-        if tglMK[0] in tgll.text:
-            press = j.find_element(By.PARTIAL_LINK_TEXT, tglMK[1])
-            break
+        if tanggal in tgll.text:
+            try:
+                matkul = j.find_element(By.PARTIAL_LINK_TEXT, tglMK[1]).click()
+                break
+            except:
+                print("TIDAK ADA MATKUL", tglMK[1], "HARI INI")
 
-press.click()
+
 
 # klik tandai hadir
 try:
-    tandaiHadir = driver.find_element(By.LINK_TEXT, 'Tandai Hadir')
-    tandaiHadir.click()
-    # driver.get('https://www.youtube.com/watch?v=13ARO0HDZsQ')
+    tandaiHadir = driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button')
+    print(tandaiHadir.is_enabled())
+    print(tandaiHadir.is_selected())
+    print(tandaiHadir.text)
+    action.move_to_element(tandaiHadir).click().perform()
+    # tandaiHadir.click()
     yutup = driver.execute_script('''window.open("https://www.youtube.com/watch?v=13ARO0HDZsQ","_blank");''')
+    driver.switch_to.window(driver.window_handles[1])
+    try:
+        play = driver.find_element(By.XPATH, '//*[@id="movie_player"]/div[5]/button')
+        action.move_to_element(play).click().perform()
+    except:
+        play = driver.find_element(By.XPATH, '//*[@id="movie_player"]/div[1]/video')
+        action.move_to_element(play).click().perform()
+        
+    
+    ##skip iklan
+    time.sleep(6)
+    try:
+
+        skip = driver.find_element(By.CLASS_NAME, 'ytp-ad-player-overlay-skip-or-preview')
+        print(skip.is_enabled())
+        print(skip.is_selected())
+        print(skip.text)
+        print("----------------------")
+        butonSkip = skip.find_element(By.TAG_NAME, 'button')
+        if skip.text == 'Skip Ads':
+            action.move_to_element(butonSkip).click().perform()
+    except:
+        print('GAK ADA IKLAN YANG BISA DI SKIP')
+    
+    # print("berhasil")
 except:
     print('Tidak ada pertemuan')
-    # driver.get('https://www.youtube.com/watch?v=pSUydWEqKwE')
     yutup = driver.execute_script('''window.open("https://www.youtube.com/watch?v=V37TaRdVUQY","_blank");''')
+    driver.switch_to.window(driver.window_handles[1])
+    try:
+        play = driver.find_element(By.XPATH, '//*[@id="movie_player"]/div[5]/button')
+        action.move_to_element(play).click().perform()
+    except:
+        play = driver.find_element(By.XPATH, '//*[@id="movie_player"]/div[1]/video')
+        action.move_to_element(play).click().perform()
+    
+    ##skip iklan
+    time.sleep(6)
+    try:
+        skip = driver.find_element(By.CLASS_NAME, 'ytp-ad-player-overlay-skip-or-preview')
+        print(skip.is_enabled())
+        print(skip.is_selected())
+        print(skip.text)
+        print("----------------------")
+        butonSkip = skip.find_element(By.TAG_NAME, 'button')
+        if skip.text == 'Skip Ads':
+            action.move_to_element(butonSkip).click().perform()
+    except:
+        print('GAK ADA IKLAN YANG BISA DI SKIP')
+
+
 
 
 while keyboard.is_pressed('Esc') == False:
