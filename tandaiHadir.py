@@ -14,7 +14,7 @@ tanggal = str(time.localtime()[2])
 
 
 driver = webdriver.Chrome()
-action = ActionChains(driver)
+
 login(driver)
 
 #open menu class
@@ -43,15 +43,17 @@ for i in row:
                 print("TIDAK ADA MATKUL", tglMK[1], "HARI INI")
 
 
-
+action = ActionChains(driver)
 # klik tandai hadir
 try:
     tandaiHadir = driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button')
     print(tandaiHadir.is_enabled())
     print(tandaiHadir.is_selected())
     print(tandaiHadir.text)
-    action.move_to_element(tandaiHadir).click().perform()
     # tandaiHadir.click()
+    time.sleep(2)
+    action.move_to_element(tandaiHadir).double_click().perform()
+    print("berhasil")
     yutup = driver.execute_script('''window.open("https://www.youtube.com/watch?v=13ARO0HDZsQ","_blank");''')
     driver.switch_to.window(driver.window_handles[1])
     try:
@@ -62,10 +64,9 @@ try:
         action.move_to_element(play).click().perform()
         
     
-    ##skip iklan
-    time.sleep(6)
+    # ##skip iklan
+    time.sleep(8)
     try:
-
         skip = driver.find_element(By.CLASS_NAME, 'ytp-ad-player-overlay-skip-or-preview')
         print(skip.is_enabled())
         print(skip.is_selected())
@@ -77,7 +78,7 @@ try:
     except:
         print('GAK ADA IKLAN YANG BISA DI SKIP')
     
-    # print("berhasil")
+    print("berhasil")
 except:
     print('Tidak ada pertemuan')
     yutup = driver.execute_script('''window.open("https://www.youtube.com/watch?v=V37TaRdVUQY","_blank");''')
@@ -90,7 +91,7 @@ except:
         action.move_to_element(play).click().perform()
     
     ##skip iklan
-    time.sleep(6)
+    time.sleep(8)
     try:
         skip = driver.find_element(By.CLASS_NAME, 'ytp-ad-player-overlay-skip-or-preview')
         print(skip.is_enabled())
