@@ -12,10 +12,10 @@ tglMK = f.readlines()
 tglMK = list(map(lambda x:x.strip(),tglMK))
 tanggal = str(time.localtime()[2])
 
-jam = (time.localtime()[3])
-jam = str(jam)+':00-'
+jamm = (time.localtime()[3])
+jam = str(jamm)+':00-'
 
-jam2 = str(jam-1)+':00-'
+jam2 = str(jamm-1)+':00-'
 
 driver = webdriver.Chrome()
 
