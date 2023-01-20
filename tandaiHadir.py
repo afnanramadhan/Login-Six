@@ -12,6 +12,10 @@ tglMK = f.readlines()
 tglMK = list(map(lambda x:x.strip(),tglMK))
 tanggal = str(time.localtime()[2])
 
+jam = (time.localtime()[3])
+jam = str(jam)+':00-'
+
+jam2 = str(jam-1)+':00-'
 
 driver = webdriver.Chrome()
 
@@ -37,10 +41,13 @@ for i in row:
         tgll = j.find_element(By.TAG_NAME, 'div')
         if tanggal in tgll.text:
             try:
-                matkul = j.find_element(By.PARTIAL_LINK_TEXT, tglMK[1]).click()
+                matkul = j.find_element(By.PARTIAL_LINK_TEXT, jam).click()
                 break
             except:
-                print("TIDAK ADA MATKUL", tglMK[1], "HARI INI")
+                try:
+                    matkul = j.find_element(By.PARTIAL_LINK_TEXT, jam2).click()
+                except:
+                    print("TIDAK ADA MATKUL PADA JAM", tglMK[1], "HARI INI")
 
 
 action = ActionChains(driver)
