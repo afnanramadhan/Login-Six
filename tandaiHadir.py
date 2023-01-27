@@ -7,9 +7,7 @@ import keyboard
 import time
 from loginsix import login
 
-f = open('tandaiHadir.txt', 'r')
-tglMK = f.readlines()
-tglMK = list(map(lambda x:x.strip(),tglMK))
+
 tanggal = str(time.localtime()[2])
 
 jamm = (time.localtime()[3])
@@ -47,7 +45,7 @@ for i in row:
                 try:
                     matkul = j.find_element(By.PARTIAL_LINK_TEXT, jam2).click()
                 except:
-                    print("TIDAK ADA MATKUL PADA JAM", tglMK[1], "HARI INI")
+                    print("TIDAK ADA MATKUL PADA JAM INI")
 
 
 action = ActionChains(driver)
