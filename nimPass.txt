@@ -1,2 +1,2 @@
-NIM
-PASSWORD
+NIM@mahasiswa.itb.ac.id
+pass

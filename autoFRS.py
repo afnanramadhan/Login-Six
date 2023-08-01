@@ -1,28 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import keyboard
-
-# f = open('nimPass.txt', 'r')
-# nimPass = f.readlines()
-# nimPass = list(map(lambda x:x.strip(),nimPass)) #delete \n
-
+from loginsix import login
 
 driver = webdriver.Chrome()
-driver.get('https://akademik.itb.ac.id/app/R/mahasiswa:13521011+2022-2/registrasI/mk/2021010986/kelas?fakultas=STEI&prodi=135')
-driver.maximize_window()
+login(driver)
 
-
-#click login with INA button
-login_ina_btn = driver.find_element(By.LINK_TEXT, 'Login dengan INA')
-login_ina_btn.click()
-
-#input nim and password
-uname = driver.find_element(By.NAME, 'username')
-uname.send_keys('13521011')
-pwd = driver.find_element(By.NAME, 'password')
-pwd.send_keys('mhsITB109193')
-submit = driver.find_element(By.NAME, 'submit')
-submit.click()
+#masuk menu frs
+driver.find_element(By.LINK_TEXT, 'Rencana Studi & Perwalian').click()
 
 fakul = driver.find_element(By.NAME, 'fakultas')
 fakul.click()
